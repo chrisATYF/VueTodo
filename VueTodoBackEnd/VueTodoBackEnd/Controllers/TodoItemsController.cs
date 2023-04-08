@@ -67,10 +67,15 @@ namespace VueTodoBackEnd.Controllers
         }
 
         // Update todo by id
-        [HttpPut("id")]
+        [HttpPut]
         public ActionResult<TodoItem> EditTodo(TodoItem model)
         {
             var modelToUpdate = _context.TodoItems.FirstOrDefault(t => t.Id == model.Id);
+            if (modelToUpdate == null)
+            {
+                return BadRequest(model);
+            }
+
             modelToUpdate.Id = model.Id;
             modelToUpdate.Title = model.Title;
             modelToUpdate.Note = model.Note;
@@ -86,6 +91,12 @@ namespace VueTodoBackEnd.Controllers
         public ActionResult DeleteTodo(int id)
         {
             var model = _context.TodoItems.FirstOrDefault(t => t.Id == id);
+
+            if (model == null)
+            {
+                return BadRequest(model);
+            }
+
             _context.TodoItems.Remove(model);
             _context.SaveChanges();
 
