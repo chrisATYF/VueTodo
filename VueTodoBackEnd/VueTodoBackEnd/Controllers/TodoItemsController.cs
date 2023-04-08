@@ -23,12 +23,14 @@ namespace VueTodoBackEnd.Controllers
             _context = context;
         }
 
+        // GET all todos
         [HttpGet]
         public ActionResult<IEnumerable<TodoItem>> GetTodoItems()
         {
             return Ok(_context.TodoItems.ToList());
         }
 
+        // GET todo by id
         [HttpGet("id")]
         public ActionResult<TodoItem> GetTodoItem(int id)
         {
@@ -45,6 +47,7 @@ namespace VueTodoBackEnd.Controllers
             return Ok(model);
         }
 
+        // Post new todos
         [HttpPost]
         public ActionResult<TodoItem> CreateTodo([FromBody] TodoItem model)
         {
@@ -63,6 +66,7 @@ namespace VueTodoBackEnd.Controllers
             return Ok(model);
         }
 
+        // Update todo by id
         [HttpPut("id")]
         public ActionResult<TodoItem> EditTodo(TodoItem model)
         {
@@ -77,6 +81,7 @@ namespace VueTodoBackEnd.Controllers
             return Ok(modelToUpdate);
         }
 
+        // Remove a todo by id
         [HttpDelete("id")]
         public ActionResult DeleteTodo(int id)
         {
