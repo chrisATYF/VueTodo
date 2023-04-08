@@ -1,6 +1,6 @@
 <script setup>
   import axios from "axios"
-  // import TodoData from "./data/data.json"
+  import TodoData from "./data/data.json"
 
   const webUrl = "https://localhost:7236/api/TodoItems"
   const response = axios.get(webUrl)
