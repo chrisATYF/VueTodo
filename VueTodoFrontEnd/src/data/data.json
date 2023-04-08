@@ -1,0 +1,38 @@
+[
+    {
+      "id": 1,
+      "title": "Practice Coding",
+      "note": "Need to practice in order to become better.",
+      "isComplete": false
+    },
+    {
+      "id": 2,
+      "title": "Mow the lawn",
+      "note": "The grass is getting really high bruh..",
+      "isComplete": false
+    },
+    {
+      "id": 3,
+      "title": "Do the dishes",
+      "note": "Every mans most hated thing to do.",
+      "isComplete": false
+    },
+    {
+      "id": 4,
+      "title": "Change strings",
+      "note": "Guitar strings are looking pretty worn. It is time to change them.",
+      "isComplete": false
+    },
+    {
+      "id": 5,
+      "title": "Clean house",
+      "note": "Do you want to live in a pig pen?",
+      "isComplete": false
+    },
+    {
+      "id": 6,
+      "title": "Buy your wife flowers",
+      "note": "She loves flowers and that is the only reason needed",
+      "isComplete": false
+    }
+  ]
