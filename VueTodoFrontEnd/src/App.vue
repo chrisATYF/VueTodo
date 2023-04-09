@@ -4,7 +4,9 @@
 
 <template>
   <main>
-    <CardList></CardList>
+    <Suspense>
+      <CardList></CardList>
+    </Suspense>
   </main>
 </template>
 
