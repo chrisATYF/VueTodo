@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Identity;
 using VueTodoBackEnd.Models;
+using VueTodoBackEnd.Services.Interfaces;
 
 namespace VueTodoBackEnd.Controllers
 {
@@ -16,29 +17,29 @@ namespace VueTodoBackEnd.Controllers
     [ApiController]
     public class TodoItemsController : Controller
     {
-        private readonly TodoDbContext _context;
+        protected readonly ITodo _efTodoService;
 
-        public TodoItemsController(TodoDbContext context)
+        public TodoItemsController(ITodo efTodoService)
         {
-            _context = context;
+            _efTodoService = efTodoService;
         }
 
         // GET all todos
         [HttpGet]
-        public ActionResult<IEnumerable<TodoItem>> GetTodoItems()
+        public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
         {
-            return Ok(_context.TodoItems.ToList());
+            return Ok(await _efTodoService.GetTodoItems());
         }
 
         // GET todo by id
         [HttpGet("id")]
-        public ActionResult<TodoItem> GetTodoItem(int id)
+        public async Task<ActionResult<TodoItem>> GetTodoItem(int id)
         {
             if (id == 0)
             {
                 return BadRequest();
             }
-            var model = _context.TodoItems.FirstOrDefault(t => t.Id == id);
+            var model = await _efTodoService.GetItem(id);
             if (model == null)
             {
                 return NotFound();
@@ -49,7 +50,7 @@ namespace VueTodoBackEnd.Controllers
 
         // Post new todos
         [HttpPost]
-        public ActionResult<TodoItem> CreateTodo([FromBody] TodoItem model)
+        public async Task<ActionResult<TodoItem>> CreateTodo([FromBody] TodoItem model)
         {
             if (model == null)
             {
@@ -60,45 +61,37 @@ namespace VueTodoBackEnd.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
-            _context.TodoItems.Add(model);
-            _context.SaveChanges();
+            await _efTodoService.AddItem(model);
 
             return Ok(model);
         }
 
         // Update todo by id
-        [HttpPut]
-        public ActionResult<TodoItem> EditTodo(TodoItem model)
+        [HttpPut("id")]
+        public async Task<ActionResult<TodoItem>> EditTodo(int id, TodoItem model)
         {
-            var modelToUpdate = _context.TodoItems.FirstOrDefault(t => t.Id == model.Id);
-            if (modelToUpdate == null)
+            if (model == null)
             {
                 return BadRequest(model);
             }
+            await _efTodoService.UpdateItem(id, model);
+            var modelUpdated = await _efTodoService.GetItem(id);
 
-            modelToUpdate.Id = model.Id;
-            modelToUpdate.Title = model.Title;
-            modelToUpdate.Note = model.Note;
-            modelToUpdate.IsComplete = model.IsComplete;
-
-            _context.SaveChanges();
-
-            return Ok(modelToUpdate);
+            return Ok(modelUpdated);
         }
 
         // Remove a todo by id
         [HttpDelete("id")]
-        public ActionResult DeleteTodo(int id)
+        public async Task<ActionResult> DeleteTodo(int id)
         {
-            var model = _context.TodoItems.FirstOrDefault(t => t.Id == id);
+            var model = await _efTodoService.GetItem(id);
 
             if (model == null)
             {
                 return BadRequest(model);
             }
 
-            _context.TodoItems.Remove(model);
-            _context.SaveChanges();
+            _efTodoService.DeleteItem(id);
 
             return Ok();
         }

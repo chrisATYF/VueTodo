@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using VueTodoBackEnd.Models;
+using VueTodoBackEnd.Services;
+using VueTodoBackEnd.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,7 @@ builder.Services.AddDbContext<TodoDbContext>(opt =>
     opt.UseSqlServer(connectionString));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<ITodo, EFTodoService>();
 
 var app = builder.Build();
 
