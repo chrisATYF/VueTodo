@@ -3,8 +3,29 @@
     import axios from "axios"
 
     const showModal = ref(false);
-    const response = await axios.get("https://localhost:7236/api/TodoItems")
+    const webUrl = "https://localhost:7236/api/TodoItems"
+    const response = await axios.get(webUrl)
     const todoList = response.data
+
+    function addTodoItem() {
+        axios.post(webUrl, {
+            title: "Post test",
+            note: "I hope this works the first time",
+            isCompleted: false
+        })
+    }
+
+    function updateTodoItem(id) {
+        axios.put(webUrl+"/id?id="+id)
+    }
+
+    function deleteTodoItem(id) {
+        axios.delete(webUrl+"/id?id="+id)
+    }
+
+    function getTodoItem(id) {
+        axios.get(webUrl+"/id?id="+id);
+    }
 </script>
 
 <template>
@@ -27,7 +48,7 @@
                     <div class="card">
                         <h3>{{ todoItem.title }}</h3>
                         <p>{{ todoItem.note }}</p>
-                        <input type="checkbox">
+                        <input @click="deleteTodoItem(todoItem.id)" type="checkbox">
                     </div>
                 </div>
             </div>
