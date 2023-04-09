@@ -25,8 +25,9 @@
             <div v-for="todoItem in todoList">
                 <div v-if="!todoItem.isComplete" class="cards-container">
                     <div class="card">
-                        <h4>{{ todoItem.title }}</h4>
-                        <p class="main-text">{{ todoItem.note }}</p>
+                        <h3>{{ todoItem.title }}</h3>
+                        <p>{{ todoItem.note }}</p>
+                        <input type="checkbox">
                     </div>
                 </div>
             </div>
