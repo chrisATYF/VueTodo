@@ -10,8 +10,6 @@
     let note = "";
     let date = "";
 
-    console.log(todoList);
-
     function addTodoItem() {
         axios.post(webUrl, {
             id: 0,
