@@ -1,11 +1,11 @@
 <script setup>
-  import CardList from "./components/CardList.vue"
+  import TodoList from "./components/TodoList.vue"
 </script>
 
 <template>
   <main>
     <Suspense>
-      <CardList></CardList>
+      <TodoList></TodoList>
     </Suspense>
   </main>
 </template>

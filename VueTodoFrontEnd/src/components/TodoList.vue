@@ -1,49 +1,56 @@
 <script setup>
-    import { ref, vModelCheckbox } from "vue";
+    import { ref, watch } from "vue";
     import axios from "axios"
 
-    const showModal = ref(false);
+    const showAddModal = ref(false);
     const webUrl = "https://localhost:7236/api/TodoItems"
     const response = await axios.get(webUrl)
     const todoList = response.data
+    let title = "";
+    let note = "";
 
     function addTodoItem() {
         axios.post(webUrl, {
-            title: "Post test",
-            note: "I hope this works the first time",
-            isCompleted: false
+            id: 0,
+            title: title,
+            note: note,
+            isComplete: false
         })
-    }
 
-    function updateTodoItem(id) {
-        axios.put(webUrl+"/id?id="+id)
+        console.log(title);
+        console.log(note);
+
+        title = "";
+        note = "";
+
+        location.reload()
     }
 
     function deleteTodoItem(id) {
         axios.delete(webUrl+"/id?id="+id)
-    }
-
-    function getTodoItem(id) {
-        axios.get(webUrl+"/id?id="+id);
+        
+        location.reload()
     }
 </script>
 
 <template>
     <main>
-        <div v-if="showModal" class="overlay">
-            <div class="modal">
-                <textarea class="todoItemTitle" name="todoTitle" id="todo" cols="1" rows="2" placeholder="Enter a title..."></textarea>
-                <textarea name="todoItemNote" id="todo" cols="1" rows="10" placeholder="Description.."></textarea>
-                <button>Add Todo</button>
-                <button @click="showModal = false" class="closeBtn">Close</button>
-            </div>
+        <div v-if="showAddModal" class="overlay">
+            <form @submit.prevent="addTodoItem(title, note)">
+                <div class="modal">
+                    <input v-model="title" name="title" type="text" placeholder="Enter a title.." />
+                    <textarea v-model="note" name="note" cols="1" rows="5" placeholder="Description.."></textarea>
+                    <button type="submit">Add Todo</button>
+                    <button @click="showAddModal = false" type="button" class="closeBtn">Close</button>
+                </div>
+            </form>
         </div>
         <div class="container">
             <header>
                 <h1>Todo With Vue</h1>
-                <button @click="showModal = true">+</button>
+                <button @click="showAddModal = true">+</button>
             </header>
-            <div v-for="todoItem in todoList">
+            <div v-for="todoItem in todoList" :key="todoItem.id">
                 <div v-if="!todoItem.isComplete" class="cards-container">
                     <div class="card">
                         <h3>{{ todoItem.title }}</h3>
