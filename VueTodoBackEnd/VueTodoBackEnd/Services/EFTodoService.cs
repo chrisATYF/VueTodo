@@ -35,6 +35,7 @@ namespace VueTodoBackEnd.Services
             modelToUpdate.Id = model.Id;
             modelToUpdate.Title = model.Title;
             modelToUpdate.Note = model.Note;
+            modelToUpdate.TodoDate = model.TodoDate;
             modelToUpdate.IsComplete = model.IsComplete;
 
             await _context.SaveChangesAsync();

@@ -10,6 +10,7 @@ namespace VueTodoBackEnd.Models
         [Required]
         public string Title { get; set; }
         public string? Note { get; set; }
+        public string? TodoDate { get; set; }
         public bool IsComplete { get; set; }
     }
 }

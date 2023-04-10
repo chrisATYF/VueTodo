@@ -8,20 +8,22 @@
     const todoList = response.data
     let title = "";
     let note = "";
+    let date = "";
+
+    console.log(todoList);
 
     function addTodoItem() {
         axios.post(webUrl, {
             id: 0,
             title: title,
             note: note,
+            todoDate: date,
             isComplete: false
         })
 
-        console.log(title);
-        console.log(note);
-
         title = "";
         note = "";
+        date = "";
 
         location.reload()
     }
@@ -40,6 +42,7 @@
                 <div class="modal">
                     <input v-model="title" name="title" type="text" placeholder="Enter a title.." />
                     <textarea v-model="note" name="note" cols="1" rows="5" placeholder="Description.."></textarea>
+                    <input v-model="date" type="date"/>
                     <button type="submit">Add Todo</button>
                     <button @click="showAddModal = false" type="button" class="closeBtn">Close</button>
                 </div>
@@ -55,9 +58,13 @@
                     <div class="card">
                         <h3>{{ todoItem.title }}</h3>
                         <p>{{ todoItem.note }}</p>
+                        <p v-if="todoItem.todoDate">{{ todoItem.todoDate }}</p>
                         <input @click="deleteTodoItem(todoItem.id)" type="checkbox">
                     </div>
                 </div>
+            </div>
+            <div v-if="todoList.length === 0">
+                <h3>Add a todo..</h3>
             </div>
         </div>
     </main>
