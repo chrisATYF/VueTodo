@@ -32,21 +32,21 @@ namespace VueTodoBackEnd.Controllers
         }
 
         // GET todo by id
-        [HttpGet("id")]
-        public async Task<ActionResult<TodoItem>> GetTodoItem(int id)
-        {
-            if (id == 0)
-            {
-                return BadRequest();
-            }
-            var model = await _efTodoService.GetItem(id);
-            if (model == null)
-            {
-                return NotFound();
-            }
+        //[HttpGet("id")]
+        //public async Task<ActionResult<TodoItem>> GetTodoItem(int id)
+        //{
+        //    if (id == 0)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    var model = await _efTodoService.GetItem(id);
+        //    if (model == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return Ok(model);
-        }
+        //    return Ok(model);
+        //}
 
         // Post new todos
         [HttpPost]
@@ -67,18 +67,18 @@ namespace VueTodoBackEnd.Controllers
         }
 
         // Update todo by id
-        [HttpPut("id")]
-        public async Task<ActionResult<TodoItem>> EditTodo(int id, TodoItem model)
-        {
-            if (model == null)
-            {
-                return BadRequest(model);
-            }
-            await _efTodoService.UpdateItem(id, model);
-            var modelUpdated = await _efTodoService.GetItem(id);
+        //[HttpPut("id")]
+        //public async Task<ActionResult<TodoItem>> EditTodo(int id, TodoItem model)
+        //{
+        //    if (model == null)
+        //    {
+        //        return BadRequest(model);
+        //    }
+        //    await _efTodoService.UpdateItem(id, model);
+        //    var modelUpdated = await _efTodoService.GetItem(id);
 
-            return Ok(modelUpdated);
-        }
+        //    return Ok(modelUpdated);
+        //}
 
         // Remove a todo by id
         [HttpDelete("id")]
