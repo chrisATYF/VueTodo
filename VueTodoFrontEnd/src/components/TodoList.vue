@@ -37,11 +37,13 @@ function deleteTodoItem(id) {
     <div v-if="showAddModal" class="overlay">
         <form @submit.prevent="addTodoItem(title, note)">
             <div class="modal">
-                <input v-model="title" name="title" type="text" placeholder="Enter a title.." />
-                <textarea v-model="note" name="note" cols="1" rows="4" placeholder="Description.."></textarea>
-                <input v-model="date" type="date" />
-                <button type="submit">Add Todo</button>
-                <button @click="showAddModal = false" type="button" class="closeBtn">Close</button>
+                <input v-model="title" name="title" type="text" placeholder="Enter a title.." style="margin: 5px;" />
+                <textarea v-model="note" name="note" cols="1" rows="4" placeholder="Description.." style="margin: 5px;"></textarea>
+                <input v-model="date" type="date" style="margin: 5px;" />
+                <div class="buttonContainer">
+                    <button type="submit">Add Todo</button>
+                    <button @click="showAddModal = false" type="button" class="closeBtn">Close</button>
+                </div>
             </div>
         </form>
     </div>
@@ -58,7 +60,6 @@ function deleteTodoItem(id) {
                     <p class="todoDate" v-if="todoItem.todoDate">{{ todoItem.todoDate }}
                         <input @click="deleteTodoItem(todoItem.id)" type="checkbox">
                     </p>
-                    
                 </div>
             </div>
         </div>
@@ -133,7 +134,7 @@ header button {
     height: 300px;
     background-color: rgb(132, 145, 163);
     border-radius: 10px;
-    padding: 30px;
+    padding: 20px;
     position: relative;
     display: flex;
     flex-direction: column;
